@@ -60,17 +60,12 @@ if 'http' not in url:
 playlist_URLs = crawl(url)
 
 for link in playlist_URLs:
-    print(link)
-    #yt = YouTube(link)
-
     try:
         yt = YouTube(link)
-        stream = yt.streams.first()
+        stream = yt.streams.filter(res="360p", file_extension='mp4').first()
         print("Downoading ..." + link)
-        sys.stdout.write("Downoading ..." + link + '\n')
         stream.download(destination)
         print("Finishing ..." + link)
-        sys.stdout.write("Finishing ..." + link + '\n')
         del yt
         del stream
     except:
