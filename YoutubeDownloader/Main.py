@@ -4,6 +4,7 @@ import time
 import urllib.error
 import urllib.request
 from collections import OrderedDict
+
 from pytube import YouTube
 
 playlist_URLs = []
@@ -58,15 +59,27 @@ if 'http' not in url:
 
 
 playlist_URLs = crawl(url)
-
+noOfURLs = len(playlist_URLs)
+i = 1
+print(noOfURLs)
 for link in playlist_URLs:
     try:
+        print("Getting Meta-Data ..." + link)
+
         yt = YouTube(link)
+
+        print("Downoading ..." + yt.title)
+
         stream = yt.streams.filter(res="360p", file_extension='mp4').first()
-        print("Downoading ..." + link)
         stream.download(destination)
-        print("Finishing ..." + link)
+
+        print("Finishing ..." + yt.title)
+        print(i)
+        print("")
+        i = i + 1
         del yt
         del stream
     except:
+        print("Fails: " + link)
+        print("")
         pass
