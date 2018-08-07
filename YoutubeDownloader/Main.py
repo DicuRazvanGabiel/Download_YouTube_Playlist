@@ -49,18 +49,15 @@ def crawl(url):
         #     i = i + 1
     return all_url
 
-# if len(sys.argv) < 2 or len(sys.argv) > 2:
-#     print('USAGE: python3 youParse.py YOUTUBEurl')
-#     exit(1)
-#
-# else:
-#     url = sys.argv[1]
-#     if 'http' not in url:
-#         url = 'http://' + url
-#     #crawl(url)
-#     crawl("https://www.youtube.com/playlist?list=PLo9MNzK_jQY-QVtFYW9wx4HSewIlbtikJ")
 
-playlist_URLs = crawl("https://www.youtube.com/playlist?list=PLo9MNzK_jQY-QVtFYW9wx4HSewIlbtikJ")
+url = sys.argv[1]
+destination = sys.argv[2]
+
+if 'http' not in url:
+    url = 'http://' + url
+
+
+playlist_URLs = crawl(url)
 
 for link in playlist_URLs:
     print(link)
@@ -70,8 +67,10 @@ for link in playlist_URLs:
         yt = YouTube(link)
         stream = yt.streams.first()
         print("Downoading ..." + link)
-        stream.download("C:/Users/itsix/Desktop/youtube_downloads")
+        sys.stdout.write("Downoading ..." + link + '\n')
+        stream.download(destination)
         print("Finishing ..." + link)
+        sys.stdout.write("Finishing ..." + link + '\n')
         del yt
         del stream
     except:
